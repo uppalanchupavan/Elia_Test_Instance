@@ -1,18 +1,14 @@
 ##==============================================================================
-#*   Launch Point NAME: EG_ASSET_GOTO_WOTRACK
+#*   Launch Point NAME: EG_ASSET_GOTO_INC
 #* 
-#*   PURPOSE: To implement GO TO WOTRACK button in list Tab. On clicking the button, system should move 
-#*            from ASSET to WOTRACK app list tab.   The system should display the list of WOs based on ASSET available in asset resultSet
+#*   PURPOSE: To implement GO TO INCINDET button in list Tab. On clicking the button, system should move 
+#*            from ASSET to INCINDENT app list tab.   The system should display the list of Incidents based on ASSET available in asset resultSet
 #*
 #*   REVISIONS:
 #*   Ver        Date              Author                             Description
 #*   ---------  ---------- ---  ---------- ---------------  -----------------------------------
-#*   1          29/08/2025      Ayushi B                    To implement a GOTOWOTRACK button
-#*   2          15/06/2026      Pavan Uppalanchu            To modify the logic on assetWhereClause
-#*   3          23/07/2026      Pavan Uppalanchu            Fix browser back-button showing double header /
-#*                                                          not redirecting to ASSET: replaced full
-#*                                                          manage-shell URL with short-form app-link so
-#*                                                          the Graphite SPA handles history internally
+#*   1          29/08/2025      Ayushi Rastogi                  To implement a GOTOINC button
+#*   2          15/06/2026      Pavan Uppalanchu            To modify the logic on assetWhereClause:
 #*
 #***************************** End Standard Header ****************************
 #================================================================================
@@ -25,7 +21,7 @@ from psdi.mbo import MboConstants
 from psdi.server import MXServer
 
 logger = MXLoggerFactory.getLogger("maximo.autoscript")
-logger.info("===== ASSET → GO TO WORK ORDER ACTION STARTED =====")
+logger.info("===== ASSET → GO TO INCIDENTS ORDER ACTION STARTED =====")
 
 # -------------------------------------------------
 # 1. Get Web Client Context
@@ -63,7 +59,7 @@ else:
 # you can append it here if needed, e.g.:
 # whereClause += " and siteid = '" + currentApp.getAppBean().getMbo().getString("SITEID") + "'"
 
-logger.info("Generated WO target where clause: %s" % whereClause)
+logger.info("Generated INCIDENT target where clause: %s" % whereClause)
 
 # -------------------------------------------------
 # 4. SAVE QUERY IN QUERY TABLE
@@ -96,18 +92,15 @@ if not resultsBean.getMboSet().isEmpty():
     # -------------------------------------------------
     encodedWhere = URLEncoder.encode(whereClause, "UTF-8")
 
-    # Use the short-form app-link (no manage-shell/index.html prefix).
-    # gotoApplink() resolves this internally within the Graphite SPA so
-    # the browser history entry is replaced correctly, and the back button
-    # returns the user to the ASSET app without a double-header issue.
     finalUrl = (
+        
         "?event=loadapp"
-        "&value=wotrack"
+        "&value=incident"
         "&additionalevent=sqlwhere"
         "&additionaleventvalue=" + encodedWhere
     )
 
     wcs.gotoApplink(finalUrl)
 
-    logger.info("Navigation triggered to WOTRACK with URL-encoded where clause.")
+    logger.info("Navigation triggered to INCINDENT with URL-encoded where clause.")
     logger.info("===== ASSET → GO TO WORK ORDER ACTION COMPLETED =====")

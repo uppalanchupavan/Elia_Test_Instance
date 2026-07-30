@@ -409,7 +409,7 @@ def buildClauseFromAttrSearch(AttrSearch, ctx):
         ac_service = MXServer.getMXServer().lookup("ASSETCATALOG")
         #generated_where = ac_service.attributesSearch(wcs.getUserInfo(), appBean.getMboName(), attribute_set)
         attributesAndValues = [[None for j in range(5)] for i in range(1)]
-
+ 
         if searchmbo and not searchmbo.toBeDeleted():
             wcs = ctx.webclientsession()
             app = wcs.getCurrentApp()
@@ -421,6 +421,7 @@ def buildClauseFromAttrSearch(AttrSearch, ctx):
     # Call existing Java methods
         attrsAndValues = ac_service.convertList(wcs.getUserInfo(), attributesAndValues)
         clausePart_attr = ac_service.getClassAndAttributesSearchWhere(wcs.getUserInfo(),appBean.getMboName(),None,attrsAndValues,None,None)
+        
         
         if attrassettype and clausePart_attr:
         
@@ -437,7 +438,7 @@ def buildClauseFromAttrSearch(AttrSearch, ctx):
         if Empty(clausePart,ctx):
             continue
             
-        logger.debug("Specification Search Row {0} thisOp: '{1}', pendingOp: '{2}', clausePart: {3}".format(i, thisRowOp, pendingOp, clausePart))
+        #logger.debug("Specification Search Row {0} thisOp: '{1}', pendingOp: '{2}', clausePart: {3}".format(i, thisRowOp, pendingOp, clausePart))
         
         if firstValidRow:
             clause = clausePart
@@ -452,8 +453,9 @@ def buildClauseFromAttrSearch(AttrSearch, ctx):
     if allRowsEmpty:
         return ""
         
-    logger.debug("Final Specifications Search clause: " + clause)
+    #logger.debug("Final Specifications Search clause: " + clause)
     return clause
+
     
 def buildSinglePaintWorksRowClausePart(assetType, assetField, specValue, operator, ctx):
     """

@@ -70,7 +70,7 @@ logger.info("Generated WO target where clause: %s" % whereClause)
 # -------------------------------------------------
 
 if not resultsBean.getMboSet().isEmpty():
-    fmt = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss")
+    fmt = SimpleDateFormat("HH-mm-ss_dd-MM-yyyy")
     timestamp = fmt.format(Date())
 
     filterName = "FILTER_{}_{}".format(timestamp, user)
